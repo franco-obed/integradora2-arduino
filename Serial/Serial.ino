@@ -42,7 +42,7 @@ void loop() {
   BT.println("%");
   delay(4000);
 
-  if(hum_suelo < 40){
+  if(hum_suelo < 30){
     BT.println("Nivel de Humedad: BAJO");
     digitalWrite(ledR, HIGH);
     digitalWrite(ledA, LOW);
@@ -50,7 +50,7 @@ void loop() {
     digitalWrite(bomba, HIGH);
     delay(6000);
   }
-  else if((hum_suelo >= 40) && (hum_suelo < 70)){
+  else if((hum_suelo >= 30) && (hum_suelo < 60)){
     BT.println("Nivel de humedad: MEDIO");
     digitalWrite(ledR, LOW);
     digitalWrite(ledA, HIGH);
@@ -58,7 +58,7 @@ void loop() {
     digitalWrite(bomba, HIGH);
     delay(3000);
   }
-  else if (hum_suelo >= 70){
+  else if (hum_suelo >= 60){
     BT.println("Nivel de Humedad: OPTIMO");
     digitalWrite(ledR, LOW);
     digitalWrite(ledA, LOW);
