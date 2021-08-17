@@ -1,23 +1,15 @@
 #include <SoftwareSerial.h>
-#include <DHT.h>
-#define Type DHT11
-
-int sensorPin= 2;
-DHT T1(sensorPin,Type);
 SoftwareSerial BT(4,5);//TX y RX
 
-float tempC;
 int bomba=10;
 int ledV=9;
 int ledA=8;
 int ledR=7;
 int hum_suelo;
 
-
 void setup() {
   Serial.begin(9600);
   BT.begin(9600);
-  T1.begin();
   pinMode(bomba, OUTPUT);
   pinMode(ledV, OUTPUT);
   pinMode(ledA, OUTPUT);
@@ -26,14 +18,9 @@ void setup() {
 }
 
 void loop() {
-  tempC=T1.readTemperature();
-
+  
   if(Serial.available())
     BT.write(Serial.read());  
-  
-  BT.print("Temperatura: ");
-  BT.print(tempC);
-  BT.println("°C");
   
   hum_suelo = analogRead(A0);
   BT.print("Porcentaje de humedad: ");
