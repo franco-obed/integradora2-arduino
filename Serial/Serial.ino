@@ -6,9 +6,7 @@ int sensorPin= 2;
 DHT T1(sensorPin,Type);
 SoftwareSerial BT(4,5);//TX y RX
 
-//float humedad;
 float tempC;
-//int espera=5000;
 int bomba=10;
 int ledV=9;
 int ledA=8;
@@ -28,47 +26,44 @@ void setup() {
 }
 
 void loop() {
-  //humedad=T1.readHumidity();
   tempC=T1.readTemperature();
 
-  Serial.print("Temperatura: ");
-  Serial.print(tempC);
-  Serial.println("°C");
+  if(Serial.available())
+    BT.write(Serial.read());  
+  
+  BT.print("Temperatura: ");
+  BT.print(tempC);
+  BT.println("°C");
   
   hum_suelo = analogRead(A0);
-  Serial.print("Porcentaje de humedad: ");
+  BT.print("Porcentaje de humedad: ");
   hum_suelo = map(hum_suelo,1023,0,0,100);
-  Serial.print(hum_suelo);
-  Serial.println("%");
-  delay(5000);
+  BT.print(hum_suelo);
+  BT.println("%");
+  delay(4000);
 
   if(hum_suelo < 40){
-    Serial.println("Nivel de Humedad: BAJO");
+    BT.println("Nivel de Humedad: BAJO");
     digitalWrite(ledR, HIGH);
     digitalWrite(ledA, LOW);
     digitalWrite(ledV, LOW);
     digitalWrite(bomba, HIGH);
     delay(6000);
   }
-  else if((hum_suelo >= 40) && (hum_suelo < 60)){
-    Serial.println("Nivel de humedad: MEDIO");
+  else if((hum_suelo >= 40) && (hum_suelo < 70)){
+    BT.println("Nivel de humedad: MEDIO");
     digitalWrite(ledR, LOW);
     digitalWrite(ledA, HIGH);
     digitalWrite(ledV, LOW);
     digitalWrite(bomba, HIGH);
     delay(3000);
   }
-  else if (hum_suelo >= 60){
-    Serial.println("Nivel de Humedad: OPTIMO");
+  else if (hum_suelo >= 70){
+    BT.println("Nivel de Humedad: OPTIMO");
     digitalWrite(ledR, LOW);
     digitalWrite(ledA, LOW);
     digitalWrite(ledV, HIGH);
     digitalWrite(bomba, LOW);
   }
-  
-  
-   
-  
-   
   
 }
